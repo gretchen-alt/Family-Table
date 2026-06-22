@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Recipe — The Family Table</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<header>
+  <a class="site-title" href="index.html">The Family <span>Table</span></a>
+  <nav>
+    <a href="index.html">Recipes</a>
+    <a href="#">About</a>
+  </nav>
+</header>
+
+<main class="recipe-page" id="recipe-root">
+  <p style="color: var(--ink-faint); font-size: 0.9rem;">Loading recipe…</p>
+</main>
+
+<footer>
+  The Family Table &nbsp;·&nbsp; Made with love
+</footer>
+
+<script>
+// ── Utility: parse a number fraction string like "1/2" or "1.5"
+function parseFraction(str) {
+  str = str.trim();
+  if (str.includes('/')) {
+    const [n, d] = str.split('/').map(Number);
+    return n / d;
+  }
+  return parseFloat(str) || 0;
+}
+
+// ── Utility: format a number for display (fractions for small values)
+function formatAmount(num) {
+  const fractions = [
+    [1, '1'], [3/4, '¾'], [2/3, '⅔'], [1/2, '½'],
+    [1/3, '⅓'], [1/4, '¼'], [1/8, '⅛']
+  ];
+  if (num <= 0) return '';
+
+  const whole = Math.floor(num);
+  const remainder = num - whole;
+
+  // Find closest fraction for remainder
+  let fracStr = '';
+  if (remainder > 0.05) {
+    let best = null, bestDiff = Infinity;
+    for (const [val, sym] of fractions) {
+      const diff = Math.abs(remainder - val);
+      if (diff < bestDiff) { bestDiff = diff; best = sym; }
+    }
+    if (bestDiff < 0.07 && best !== '1') {
+      fracStr = best;
+    } else {
+      // Just round to 1 decimal
+      return (Math.round(num * 10) / 10).toString();
+    }
+  }
+
+  if (whole === 0) return fracStr;
+  if (fracStr === '') return whole.toString();
+  return `${whole} ${fracStr}`;
+}
+
+// ── Parse the markdown frontmatter (YAML-ish between --- delimiters)
+function parseFrontmatter(text) {
+  const match = text.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+  if (!match) return { meta: {}, body: text };
+
+  const meta = {};
+  const lines = match[1].split('\n');
+  let currentKey = null;
+  let currentList = null;
+
+  for (const line of lines) {
+    // List item
+    if (line.match(/^  - /)) {
+      if (currentList) currentList.push(line.replace(/^  - /, '').trim());
+      continue;
+    }
+    // Key: value
+    const kv = line.match(/^(\w[\w_-]*)\s*:\s*(.*)$/);
+    if (kv) {
+      const key = kv[1];
+      const val = kv[2].trim();
+      if (val === '') {
+        // Start of a list
+        meta[key] = [];
+        currentList = meta[key];
+        currentKey = key;
+      } else {
+        meta[key] = val.replace(/^["']|["']$/g, '');
+        currentList = null;
+        currentKey = key;
+      }
+    }
+  }
+
+  return { meta, body: match[2] };
+}
+
+// ── Parse ingredient lines like:  "- 1 cup pumpkin seeds"
+// Format: "- [amount] [unit?] [name]"  or "- [name]" (no amount)
+const UNITS = ['cup','cups','tbsp','tsp','oz','lb','lbs','g','kg','ml','l','clove','cloves','can','cans','bunch','slice','slices','handful','handfuls','sprig','sprigs'];
+
+function parseIngredient(line) {
+  line = line.replace(/^[-*]\s*/, '').trim();
+
+  // Try to match: optional number (int, decimal, fraction), optional unit, rest
+  const numRe = /^(\d+(?:[\/\.]\d+)?(?:\s+\d+\/\d+)?)\s*/;
+  const numMatch = line.match(numRe);
+
+  let amount = null, unit = null, name = line;
+
+  if (numMatch) {
+    amount = parseFraction(numMatch[1]);
+    const rest = line.slice(numMatch[0].length);
+    // Check for unit
+    const unitRe = new RegExp(`^(${UNITS.join('|')})\\b\\s*`, 'i');
+    const unitMatch = rest.match(unitRe);
+    if (unitMatch) {
+      unit = unitMatch[1].toLowerCase();
+      name = rest.slice(unitMatch[0].length);
+    } else {
+      name = rest;
+    }
+  }
+
+  return { amount, unit, name: name.trim() };
+}
+
+// ── Parse step lines (## Step Title \n body text)
+function parseSteps(body) {
+  const steps = [];
+  // Steps live between ### Steps and ### Notes (or end)
+  const stepsMatch = body.match(/###\s*Steps\s*\n([\s\S]*?)(?=###|$)/i);
+  if (!stepsMatch) return steps;
+
+  const stepsText = stepsMatch[1];
+  // Each step starts with #### Title
+  const stepChunks = stepsText.split(/(?=####\s)/);
+  for (const chunk of stepChunks) {
+    const titleMatch = chunk.match(/####\s+(.+)\n([\s\S]*)/);
+    if (!titleMatch) continue;
+    steps.push({
+      title: titleMatch[1].trim(),
+      text: titleMatch[2].trim()
+    });
+  }
+  return steps;
+}
+
+// ── Parse ingredients block
+function parseIngredients(body) {
+  const match = body.match(/###\s*Ingredients\s*\n([\s\S]*?)(?=###|$)/i);
+  if (!match) return [];
+  return match[1]
+    .split('\n')
+    .filter(l => l.match(/^[-*]\s/))
+    .map(parseIngredient);
+}
+
+// ── Parse notes block
+function parseNotes(body) {
+  const match = body.match(/###\s*Notes\s*\n([\s\S]*?)(?=###|$)/i);
+  return match ? match[1].trim() : null;
+}
+
+// ── Render the full recipe page
+function renderRecipe(text) {
+  const { meta, body } = parseFrontmatter(text);
+  const ingredients = parseIngredients(body);
+  const steps = parseSteps(body);
+  const notes = parseNotes(body);
+
+  // Update page title
+  document.title = `${meta.title || 'Recipe'} — The Family Table`;
+
+  let baseServings = parseInt(meta.servings) || 4;
+  let currentServings = baseServings;
+
+  function buildIngredientHTML(servings) {
+    const scale = servings / baseServings;
+    return ingredients.map(ing => {
+      const amt = ing.amount !== null
+        ? `<span class="ingredient-amount">${formatAmount(ing.amount * scale)}${ing.unit ? ' ' + ing.unit : ''}</span>`
+        : `<span class="ingredient-amount">—</span>`;
+      return `<li>${amt}<span>${ing.name}</span></li>`;
+    }).join('');
+  }
+
+  const tagsHTML = (meta.tags || []).length
+    ? `<div class="recipe-tags">${(Array.isArray(meta.tags) ? meta.tags : meta.tags.split(',')).map(t => `<span class="tag">${t.trim()}</span>`).join('')}</div>`
+    : '';
+
+  const stepsHTML = steps.map((step, i) => `
+    <div class="step">
+      <div class="step-number">${i + 1}</div>
+      <div class="step-content">
+        <div class="step-title">${step.title}</div>
+        <p class="step-text">${step.text}</p>
+      </div>
+    </div>
+  `).join('');
+
+  const notesHTML = notes
+    ? `<div class="notes-section"><h2>Notes</h2><p>${notes}</p></div>`
+    : '';
+
+  const metaItems = [
+    meta.origin ? `<div class="meta-item"><span class="meta-label">Origin</span><span class="meta-value">${meta.origin}</span></div>` : '',
+    meta.time   ? `<div class="meta-item"><span class="meta-label">Time</span><span class="meta-value">${meta.time}</span></div>` : '',
+    meta.instant_pot === 'yes' ? `<div class="meta-item"><span class="meta-label">Instant Pot</span><span class="meta-value">Yes ✓</span></div>` : '',
+  ].filter(Boolean).join('');
+
+  const html = `
+    <a class="back-link" href="index.html">All Recipes</a>
+
+    <div class="recipe-header">
+      ${meta.origin ? `<div class="recipe-origin">${meta.origin}</div>` : ''}
+      <h1 class="recipe-title">${meta.title || 'Untitled Recipe'}</h1>
+      ${meta.description ? `<p class="recipe-description">${meta.description}</p>` : ''}
+      <div class="recipe-meta">${metaItems}</div>
+      ${tagsHTML}
+    </div>
+
+    <div class="recipe-body">
+      <div class="ingredients-section">
+        <h2>Ingredients</h2>
+        <div class="servings-control">
+          <button id="dec" aria-label="Fewer servings">−</button>
+          <span class="servings-display" id="servings-display">Serves ${currentServings}</span>
+          <button id="inc" aria-label="More servings">+</button>
+        </div>
+        <ul class="ingredient-list" id="ingredient-list">
+          ${buildIngredientHTML(currentServings)}
+        </ul>
+      </div>
+
+      <div class="steps-section">
+        <h2>Method</h2>
+        ${stepsHTML}
+      </div>
+
+      ${notesHTML}
+    </div>
+  `;
+
+  document.getElementById('recipe-root').innerHTML = html;
+
+  // Wire up servings buttons
+  document.getElementById('inc').addEventListener('click', () => {
+    currentServings = Math.min(currentServings + 1, 24);
+    document.getElementById('servings-display').textContent = `Serves ${currentServings}`;
+    document.getElementById('ingredient-list').innerHTML = buildIngredientHTML(currentServings);
+  });
+  document.getElementById('dec').addEventListener('click', () => {
+    currentServings = Math.max(currentServings - 1, 1);
+    document.getElementById('servings-display').textContent = `Serves ${currentServings}`;
+    document.getElementById('ingredient-list').innerHTML = buildIngredientHTML(currentServings);
+  });
+}
+
+// ── Load the recipe file specified in ?r=filename (without extension)
+async function loadRecipe() {
+  const params = new URLSearchParams(window.location.search);
+  const name = params.get('r');
+  if (!name) {
+    document.getElementById('recipe-root').innerHTML = '<p>No recipe specified. Add <code>?r=recipe-name</code> to the URL.</p>';
+    return;
+  }
+  try {
+    const res = await fetch(`recipes/${name}.md`);
+    if (!res.ok) throw new Error('Not found');
+    const text = await res.text();
+    renderRecipe(text);
+  } catch (e) {
+    document.getElementById('recipe-root').innerHTML = `<p>Recipe "${name}" could not be loaded.</p>`;
+  }
+}
+
+loadRecipe();
+</script>
+</body>
+</html>
