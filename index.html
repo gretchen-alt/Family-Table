@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Family Table</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+
+    /* ── HERO ── */
+    .hero {
+      background: var(--ink);
+      padding: 5rem 2rem 4.5rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 100%, rgba(192,154,107,0.12) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--camel);
+      margin-bottom: 1.25rem;
+    }
+
+    .hero-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2.8rem, 7vw, 5rem);
+      font-weight: 400;
+      color: var(--ivory);
+      line-height: 1.05;
+      margin-bottom: 1rem;
+      letter-spacing: -0.01em;
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--camel);
+    }
+
+    .hero-sub {
+      font-size: 0.95rem;
+      color: var(--parchment);
+      opacity: 0.65;
+      margin-bottom: 2.5rem;
+      letter-spacing: 0.04em;
+    }
+
+    /* ── SEARCH ── */
+    .search-wrap {
+      max-width: 520px;
+      margin: 0 auto;
+      position: relative;
+    }
+
+    .search-wrap input {
+      width: 100%;
+      padding: 1rem 3rem 1rem 1.5rem;
+      border: 1px solid rgba(192,154,107,0.4);
+      border-radius: 2px;
+      background: rgba(247,242,234,0.06);
+      color: var(--ivory);
+      font-family: 'Jost', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 300;
+      letter-spacing: 0.04em;
+      outline: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .search-wrap input::placeholder { color: rgba(247,242,234,0.35); }
+    .search-wrap input:focus {
+      border-color: var(--camel);
+      background: rgba(247,242,234,0.1);
+    }
+
+    .search-wrap .search-icon {
+      position: absolute;
+      right: 1rem;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--camel);
+      opacity: 0.7;
+      font-size: 1rem;
+      pointer-events: none;
+    }
+
+    /* ── TAG FILTER BAR ── */
+    .tag-bar {
+      background: var(--parchment);
+      padding: 0.85rem 2rem;
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      border-bottom: 1px solid rgba(192,154,107,0.2);
+    }
+
+    .tag-btn {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.9rem;
+      border-radius: 2rem;
+      border: 1px solid transparent;
+      background: transparent;
+      color: var(--ink-soft);
+      cursor: pointer;
+      transition: all 0.18s;
+    }
+
+    .tag-btn:hover, .tag-btn.active {
+      background: var(--ink);
+      color: var(--ivory);
+      border-color: var(--ink);
+    }
+
+    .tag-btn.active { background: var(--rust); border-color: var(--rust); }
+
+    /* ── MAIN CONTENT ── */
+    .site-main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 3.5rem 2rem 5rem;
+    }
+
+    /* ── SECTION HEADER ── */
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 1.75rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--parchment);
+    }
+
+    .section-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: var(--ink);
+    }
+
+    .section-count {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+
+    /* ── RECIPE GRID ── */
+    .recipe-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.25rem;
+      margin-bottom: 3.5rem;
+    }
+
+    /* ── RECIPE CARD ── */
+    .recipe-card {
+      background: white;
+      border: 1px solid var(--parchment);
+      border-radius: 3px;
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+      overflow: hidden;
+    }
+
+    .recipe-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(46,40,34,0.1);
+      border-color: var(--camel);
+    }
+
+    .card-accent {
+      height: 4px;
+      background: var(--camel);
+    }
+
+    .card-accent.stew   { background: var(--rust); }
+    .card-accent.sauce  { background: var(--olive); }
+    .card-accent.bean   { background: var(--teal); }
+    .card-accent.dip    { background: var(--mauve); }
+
+    .card-body {
+      padding: 1.25rem 1.35rem 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-origin {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 0.5rem;
+    }
+
+    .card-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.25rem;
+      font-weight: 500;
+      color: var(--ink);
+      line-height: 1.2;
+      margin-bottom: 0.6rem;
+    }
+
+    .card-desc {
+      font-size: 0.82rem;
+      line-height: 1.55;
+      color: var(--ink-soft);
+      flex: 1;
+      margin-bottom: 1rem;
+    }
+
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: auto;
+    }
+
+    .card-time {
+      font-size: 0.7rem;
+      color: var(--ink-faint);
+      letter-spacing: 0.06em;
+    }
+
+    .card-tags {
+      display: flex;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .card-tag {
+      font-size: 0.6rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      border-radius: 2rem;
+      background: var(--parchment);
+      color: var(--ink-soft);
+    }
+
+    /* ── SEASONAL BANNER ── */
+    .seasonal-banner {
+      background: var(--olive);
+      color: var(--ivory);
+      padding: 1.25rem 2rem;
+      text-align: center;
+      margin-bottom: 3.5rem;
+      border-radius: 2px;
+    }
+
+    .seasonal-banner p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      opacity: 0.92;
+    }
+
+    .seasonal-banner strong {
+      font-style: normal;
+      font-weight: 600;
+      color: var(--camel);
+    }
+
+    /* ── NO RESULTS ── */
+    .no-results {
+      text-align: center;
+      padding: 3rem;
+      color: var(--ink-faint);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-style: italic;
+      display: none;
+    }
+
+    @media (max-width: 600px) {
+      .hero { padding: 3.5rem 1.25rem 3rem; }
+      .site-main { padding: 2rem 1.25rem 4rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <a class="site-title" href="index.html">The Family <span>Table</span></a>
+  <nav>
+    <a href="index.html">Recipes</a>
+    <a href="#">About</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <p class="hero-eyebrow">A living cookbook</p>
+  <h1 class="hero-title">The Family<br><em>Table</em></h1>
+  <p class="hero-sub">Recipes gathered across generations and geographies</p>
+  <div class="search-wrap">
+    <input type="search" id="search-input" placeholder="Search recipes, ingredients, origins…" autocomplete="off" />
+    <span class="search-icon">⌕</span>
+  </div>
+</section>
+
+<!-- TAG FILTER -->
+<div class="tag-bar" id="tag-bar">
+  <button class="tag-btn active" data-tag="all">All</button>
+  <button class="tag-btn" data-tag="Stews">Stews</button>
+  <button class="tag-btn" data-tag="Beans">Beans</button>
+  <button class="tag-btn" data-tag="Sauces & Condiments">Sauces</button>
+  <button class="tag-btn" data-tag="Dips & Spreads">Dips</button>
+  <button class="tag-btn" data-tag="Seeds">Seeds</button>
+  <button class="tag-btn" data-tag="Vegetarian">Vegetarian</button>
+  <button class="tag-btn" data-tag="Instant Pot">Instant Pot</button>
+  <button class="tag-btn" data-tag="From the Garden">From the Garden</button>
+</div>
+
+<main class="site-main">
+
+  <!-- SEASONAL NOTE -->
+  <div class="seasonal-banner">
+    <p>It's summer — <strong>garden tomatoes</strong> are at their peak. Try the Sikil P'ak or Pepián Verde with whatever's coming in.</p>
+  </div>
+
+  <!-- STEWS -->
+  <div class="section-header" data-section="Stews">
+    <h2 class="section-title">Stews</h2>
+    <span class="section-count" id="count-stews"></span>
+  </div>
+  <div class="recipe-grid" id="grid-stews">
+
+    <a class="recipe-card" href="recipe.html?r=ghormeh-sabzi" data-tags="Stews Beans Vegetarian Instant-Pot" data-search="ghormeh sabzi persian herb bean stew lime lentil">
+      <div class="card-accent stew"></div>
+      <div class="card-body">
+        <div class="card-origin">Persian / Iranian</div>
+        <div class="card-title">Ghormeh Sabzi</div>
+        <div class="card-desc">Mountains of wilted herbs, dried limes, and beans. Earthy, tangy, and deeply aromatic.</div>
+        <div class="card-footer">
+          <span class="card-time">1 hr 30 min</span>
+          <div class="card-tags"><span class="card-tag">Instant Pot</span><span class="card-tag">Beans</span></div>
+        </div>
+      </div>
+    </a>
+
+    <a class="recipe-card" href="recipe.html?r=peanut-tempeh-stew" data-tags="Stews Vegetarian Instant-Pot Seeds" data-search="peanut groundnut tempeh maafe west african stew sweet potato kale collards">
+      <div class="card-accent stew"></div>
+      <div class="card-body">
+        <div class="card-origin">West African (Maafe-style)</div>
+        <div class="card-title">West African Peanut & Tempeh Stew</div>
+        <div class="card-desc">Warming groundnut stew with tempeh, sweet potato, and collard greens.</div>
+        <div class="card-footer">
+          <span class="card-time">50 min</span>
+          <div class="card-tags"><span class="card-tag">Instant Pot</span><span class="card-tag">Seeds</span></div>
+        </div>
+      </div>
+    </a>
+
+    <a class="recipe-card" href="recipe.html?r=pepian-verde" data-tags="Stews Vegetarian Seeds" data-search="pepian verde guatemalan mayan pumpkin seed sesame chickpea zucchini">
+      <div class="card-accent stew"></div>
+      <div class="card-body">
+        <div class="card-origin">Guatemalan / Mayan</div>
+        <div class="card-title">Pepián Verde</div>
+        <div class="card-desc">Ancient pumpkin seed and sesame sauce over roasted vegetables and chickpeas.</div>
+        <div class="card-footer">
+          <span class="card-time">45 min</span>
+          <div class="card-tags"><span class="card-tag">Seeds</span><span class="card-tag">Vegetarian</span></div>
+        </div>
+      </div>
+    </a>
+
+    <a class="recipe-card" href="recipe.html?r=scoopable-pumpkin-chili" data-tags="Stews Beans Vegetarian Instant-Pot Seeds" data-search="pumpkin chili sweet potato lentils walnuts black beans kidney beans scoopable thick">
+      <div class="card-accent stew"></div>
+      <div class="card-body">
+        <div class="card-origin">American</div>
+        <div class="card-title">Scoopable Pumpkin Chili</div>
+        <div class="card-desc">Thick, hearty chili loaded with sweet potato, lentils, and walnuts. Built to hold heavy toppings.</div>
+        <div class="card-footer">
+          <span class="card-time">40 min</span>
+          <div class="card-tags"><span class="card-tag">Instant Pot</span><span class="card-tag">Beans</span></div>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- SAUCES & DIPS -->
+  <div class="section-header" data-section="Sauces & Condiments">
+    <h2 class="section-title">Sauces & Dips</h2>
+    <span class="section-count" id="count-sauces"></span>
+  </div>
+  <div class="recipe-grid" id="grid-sauces">
+
+    <a class="recipe-card" href="recipe.html?r=sikil-pak" data-tags="Sauces & Condiments Dips & Spreads Vegetarian Seeds From the Garden" data-search="sikil pak mayan yucatan pumpkin seed tomato dip habanero cilantro">
+      <div class="card-accent dip"></div>
+      <div class="card-body">
+        <div class="card-origin">Mayan / Yucatán</div>
+        <div class="card-title">Sikil P'ak</div>
+        <div class="card-desc">Charred tomato and pumpkin seed dip. Smoky, ancient, ready in 25 minutes.</div>
+        <div class="card-footer">
+          <span class="card-time">25 min</span>
+          <div class="card-tags"><span class="card-tag">Seeds</span><span class="card-tag">Garden</span></div>
+        </div>
+      </div>
+    </a>
+
+    <a class="recipe-card" href="recipe.html?r=muhammara" data-tags="Sauces & Condiments Dips & Spreads Vegetarian" data-search="muhammara syrian red pepper walnut pomegranate molasses aleppo dip spread">
+      <div class="card-accent dip"></div>
+      <div class="card-body">
+        <div class="card-origin">Syrian / Levantine</div>
+        <div class="card-title">Muhammara</div>
+        <div class="card-desc">Roasted red pepper and walnut dip with pomegranate molasses. Sweet, smoky, tangy.</div>
+        <div class="card-footer">
+          <span class="card-time">35 min</span>
+          <div class="card-tags"><span class="card-tag">Dips</span><span class="card-tag">Vegetarian</span></div>
+        </div>
+      </div>
+    </a>
+
+    <a class="recipe-card" href="recipe.html?r=tahini-dressing" data-tags="Sauces & Condiments Vegetarian Seeds From the Garden" data-search="tahini dressing lemon garlic sesame salad levantine">
+      <div class="card-accent sauce"></div>
+      <div class="card-body">
+        <div class="card-origin">Levantine</div>
+        <div class="card-title">Garden Salad Tahini Dressing</div>
+        <div class="card-desc">Creamy, lemony sesame dressing. Doubles as a sauce for roasted vegetables.</div>
+        <div class="card-footer">
+          <span class="card-time">5 min</span>
+          <div class="card-tags"><span class="card-tag">Seeds</span><span class="card-tag">Garden</span></div>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- BEANS -->
+  <div class="section-header" data-section="Beans">
+    <h2 class="section-title">Beans</h2>
+    <span class="section-count" id="count-beans"></span>
+  </div>
+  <div class="recipe-grid" id="grid-beans">
+
+    <a class="recipe-card" href="recipe.html?r=instant-pot-baked-beans" data-tags="Beans Instant-Pot" data-search="baked beans navy pinto molasses bacon instant pot two step american">
+      <div class="card-accent bean"></div>
+      <div class="card-body">
+        <div class="card-origin">American</div>
+        <div class="card-title">Two-Step Instant Pot Baked Beans</div>
+        <div class="card-desc">Unsoaked beans pre-cooked and rinsed, then finished in a rich molasses and bacon sauce. Deep flavor, no overnight soak.</div>
+        <div class="card-footer">
+          <span class="card-time">1 hr 30 min</span>
+          <div class="card-tags"><span class="card-tag">Instant Pot</span><span class="card-tag">Beans</span></div>
+        </div>
+      </div>
+    </a>
+
+  </div>
+
+  <p class="no-results" id="no-results">No recipes found — try a different search or tag.</p>
+
+</main>
+
+<footer>
+  The Family Table &nbsp;·&nbsp; Made with love
+</footer>
+
+<script>
+  // ── All cards and sections
+  const cards = Array.from(document.querySelectorAll('.recipe-card'));
+  const sections = {
+    stews:  { grid: document.getElementById('grid-stews'),  header: document.querySelector('[data-section="Stews"]'),  count: document.getElementById('count-stews') },
+    sauces: { grid: document.getElementById('grid-sauces'), header: document.querySelector('[data-section="Sauces & Condiments"]'), count: document.getElementById('count-sauces') },
+    beans:  { grid: document.getElementById('grid-beans'),  header: document.querySelector('[data-section="Beans"]'),  count: document.getElementById('count-beans') }
+  };
+  const noResults = document.getElementById('no-results');
+
+  function normalize(str) { return (str || '').toLowerCase(); }
+
+  function filterCards(query, tag) {
+    let totalVisible = 0;
+
+    cards.forEach(card => {
+      const searchText = normalize(card.dataset.search + ' ' + card.dataset.tags + ' ' + card.querySelector('.card-title').textContent);
+      const cardTags = card.dataset.tags || '';
+      const matchesSearch = !query || searchText.includes(normalize(query));
+      const matchesTag = tag === 'all' || cardTags.includes(tag);
+      const visible = matchesSearch && matchesTag;
+      card.style.display = visible ? '' : 'none';
+      if (visible) totalVisible++;
+    });
+
+    // Update section visibility and counts
+    Object.values(sections).forEach(({ grid, header, count }) => {
+      const visibleInSection = Array.from(grid.querySelectorAll('.recipe-card')).filter(c => c.style.display !== 'none').length;
+      header.style.display = visibleInSection === 0 ? 'none' : '';
+      grid.style.display   = visibleInSection === 0 ? 'none' : '';
+      count.textContent    = visibleInSection === 1 ? '1 recipe' : `${visibleInSection} recipes`;
+    });
+
+    noResults.style.display = totalVisible === 0 ? 'block' : 'none';
+  }
+
+  // Initial count
+  filterCards('', 'all');
+
+  // Search
+  document.getElementById('search-input').addEventListener('input', e => {
+    const activeTag = document.querySelector('.tag-btn.active')?.dataset.tag || 'all';
+    filterCards(e.target.value.trim(), activeTag);
+  });
+
+  // Tags
+  document.querySelectorAll('.tag-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tag-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const query = document.getElementById('search-input').value.trim();
+      filterCards(query, btn.dataset.tag);
+    });
+  });
+</script>
+</body>
+</html>
