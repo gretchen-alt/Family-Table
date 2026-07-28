@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>About — The Family Table</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    .about-page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 3rem 2rem 5rem;
+    }
+
+    .about-eyebrow {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--rust);
+      margin-bottom: 0.5rem;
+    }
+
+    .about-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 5vw, 2.8rem);
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 1.25rem;
+    }
+
+    .about-lede {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      margin-bottom: 3rem;
+      max-width: 560px;
+    }
+
+    .about-section {
+      margin-bottom: 3rem;
+    }
+
+    .about-section h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: var(--ink);
+      padding-bottom: 0.6rem;
+      border-bottom: 1px solid var(--parchment);
+      margin-bottom: 1.25rem;
+    }
+
+    .about-section h3 {
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--camel);
+      margin: 1.75rem 0 0.75rem;
+    }
+
+    .about-section p {
+      font-size: 0.92rem;
+      line-height: 1.75;
+      color: var(--ink-soft);
+      margin-bottom: 1rem;
+    }
+
+    .about-section ul, .about-section ol {
+      margin: 0 0 1rem 1.25rem;
+      font-size: 0.9rem;
+      line-height: 1.8;
+      color: var(--ink-soft);
+    }
+
+    .about-section li { margin-bottom: 0.4rem; }
+
+    .about-section code {
+      font-family: monospace;
+      font-size: 0.85em;
+      background: var(--parchment);
+      padding: 0.1rem 0.4rem;
+      border-radius: 3px;
+      color: var(--rust);
+    }
+
+    .about-section pre {
+      background: var(--ink);
+      color: var(--parchment);
+      padding: 1rem 1.25rem;
+      border-radius: 4px;
+      overflow-x: auto;
+      font-size: 0.8rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+
+    .about-section pre code {
+      background: none;
+      color: inherit;
+      padding: 0;
+    }
+
+    .field-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+      margin-bottom: 1.25rem;
+    }
+
+    .field-table th, .field-table td {
+      text-align: left;
+      padding: 0.6rem 0.75rem;
+      border-bottom: 1px solid var(--parchment);
+      vertical-align: top;
+      color: var(--ink-soft);
+    }
+
+    .field-table th {
+      font-size: 0.68rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-faint);
+    }
+
+    .category-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .category-tags span {
+      font-size: 0.7rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 2rem;
+      background: var(--parchment);
+      color: var(--ink-soft);
+    }
+
+    .callout {
+      background: var(--parchment);
+      border-left: 3px solid var(--camel);
+      padding: 1.1rem 1.4rem;
+      border-radius: 0 4px 4px 0;
+      font-size: 0.88rem;
+      line-height: 1.7;
+      color: var(--ink-soft);
+      margin-bottom: 1.25rem;
+    }
+
+    .toc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem 1.5rem;
+      margin-bottom: 2.5rem;
+      padding: 1rem 1.25rem;
+      background: white;
+      border: 1px solid var(--parchment);
+      border-radius: 3px;
+    }
+
+    .toc a {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      color: var(--rust);
+      text-decoration: none;
+    }
+
+    .toc a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<header>
+  <a class="site-title" href="index.html">The Family <span>Table</span></a>
+  <nav>
+    <a href="index.html">Recipes</a>
+    <a href="planner.html">Meal Planner</a>
+    <a href="about.html">About</a>
+  </nav>
+</header>
+
+<main class="about-page">
+
+  <p class="about-eyebrow">A living cookbook</p>
+  <h1 class="about-title">About The Family Table</h1>
+  <p class="about-lede">A personal collection of global, seed- and legume-forward recipes — built for real weeks, low-energy days, and cooking for one. This page is both an introduction to the site and a reference for keeping it up to date.</p>
+
+  <div class="toc">
+    <a href="#what-this-is">What this site is</a>
+    <a href="#how-its-built">How it's built</a>
+    <a href="#editing">Editing a recipe</a>
+    <a href="#adding">Adding a recipe</a>
+    <a href="#photos">Adding photos</a>
+    <a href="#planner-note">A note on the grocery planner</a>
+  </div>
+
+  <div class="about-section" id="what-this-is">
+    <h2>What this site is</h2>
+    <p>The Family Table is a home for recipes that lean on seeds, beans, and plant protein — gathered from a lot of different kitchens and traditions, organized so they're easy to find on a weeknight. Search and tag filtering live on the homepage; the <a href="planner.html">Meal Planner</a> turns any set of selected recipes into a single grocery list, grouped by where each ingredient actually lives in the house.</p>
+  </div>
+
+  <div class="about-section" id="how-its-built">
+    <h2>How it's built</h2>
+    <p>All recipe content lives in one file, <code>recipes-data.js</code>. Both the recipe pages and the planner read from it directly. There are no separate files per recipe and nothing is fetched from markdown — that was an earlier approach that GitHub Pages blocked, so the whole site was rebuilt around this single data file instead.</p>
+    <p>That means editing or adding a recipe only ever touches one or two files, and never <code>recipe.html</code>, <code>planner.html</code>, or <code>style.css</code>.</p>
+  </div>
+
+  <div class="about-section" id="editing">
+    <h2>Editing an existing recipe</h2>
+    <ol>
+      <li>Open <code>recipes-data.js</code> in GitHub.</li>
+      <li>Find the recipe by its id — e.g. <code>"muhammara": {</code></li>
+      <li>Edit whatever you need — title, description, ingredients, steps, notes — and commit.</li>
+    </ol>
+    <p>That's the whole process. The recipe page and the grocery planner both pick up the change automatically.</p>
+
+    <h3>Ingredient format</h3>
+    <p>Each ingredient is one line:</p>
+    <pre><code>{ "amount": 1, "unit": "cup", "name": "walnuts, lightly toasted", "location": "Pantry", "category": "Nuts & Seeds" }</code></pre>
+
+    <table class="field-table">
+      <tr><th>Field</th><th>Notes</th></tr>
+      <tr><td><code>amount</code></td><td>A plain number. Halves and quarters are decimals — <code>0.5</code>, <code>0.25</code>, <code>0.333</code> — not fractions. Displays back as ½, ¼, ⅓ automatically.</td></tr>
+      <tr><td><code>unit</code></td><td>e.g. <code>"cup"</code>, <code>"tbsp"</code>, <code>"tsp"</code>, <code>"oz"</code>, <code>"lb"</code>, <code>"can"</code>. Use <code>null</code> for counted items (e.g. "3 garlic cloves") — put the counting word in <code>name</code> instead.</td></tr>
+      <tr><td><code>name</code></td><td>The ingredient description, including prep — e.g. <code>"garlic cloves, minced"</code>.</td></tr>
+      <tr><td><code>location</code></td><td>Where it lives in the house. Exactly one of: <code>Fridge</code>, <code>Freezer</code>, <code>Pantry</code>, <code>Counter</code>, <code>Spice Rack</code>.</td></tr>
+      <tr><td><code>category</code></td><td>The subgrouping used in the grocery planner — see below. Reuse one exactly rather than inventing a new one.</td></tr>
+    </table>
+
+    <div class="callout">
+      No real amount, like "salt and pepper to taste"? Set <code>"amount": null</code>.<br><br>
+      Plain water or anything that shouldn't appear on a grocery list? Add <code>"skip": true</code> to that ingredient and the planner will ignore it. Search <code>recipes-data.js</code> for existing examples in the tahini dressing or the granolas.
+    </div>
+
+    <h3>Existing categories</h3>
+    <p>Use one of these for <code>category</code>, so ingredients group correctly in the planner:</p>
+    <div class="category-tags">
+      <span>Produce</span><span>Dairy & Eggs</span><span>Milk & Alternatives</span><span>Protein</span><span>Frozen</span>
+      <span>Grains</span><span>Beans & Legumes</span><span>Nuts & Seeds</span><span>Dried & Freeze-Dried Fruit</span>
+      <span>Protein Powders & Supplements</span><span>Condiments & Sauces</span><span>Oils & Vinegars</span>
+      <span>Canned & Jarred</span><span>Baking & Sweeteners</span><span>Spices</span>
+    </div>
+
+    <h3>Steps format</h3>
+    <pre><code>{ "title": "Sauté the onion", "text": "In a wide pot..." }</code></pre>
+    <p>Steps are just an ordered array — add, remove, reorder, or reword freely. <code>title</code> shows as the bold step label; <code>text</code> is the instruction body.</p>
+
+    <h3>Notes format</h3>
+    <p><code>notes</code> is a single string. For multiple paragraphs, separate them with <code>\n</code> inside the string — each becomes its own paragraph on the page.</p>
+  </div>
+
+  <div class="about-section" id="adding">
+    <h2>Adding a brand new recipe</h2>
+    <p>Two steps — one in the data file, one on the homepage.</p>
+
+    <h3>1. Add the recipe to recipes-data.js</h3>
+    <p>Copy an existing recipe entry as a template and give it a new id — short, lowercase, hyphenated (e.g. <code>"lentil-koftas"</code>). This id becomes the URL: <code>recipe.html?r=lentil-koftas</code>.</p>
+    <pre><code>"your-new-id": {
+  "title": "...",
+  "description": "...",
+  "origin": "...",
+  "time": "...",
+  "servings": 4,
+  "instant_pot": false,
+  "section": "Dinner",
+  "tags": ["Dinner", "Vegetarian"],
+  "ingredients": [ /* ... */ ],
+  "steps": [ /* ... */ ],
+  "notes": "..."
+}</code></pre>
+    <p>Don't forget the comma after the closing brace if it's not the last entry in the file. <code>section</code> should be one of: <code>Breakfast</code>, <code>Stews</code>, <code>Sauces & Dips</code>, <code>Beans</code>, <code>Dinner</code>.</p>
+
+    <h3>2. Add a card to index.html</h3>
+    <p>Find the section matching your recipe (search for <code>&lt;!-- DINNER --&gt;</code>, for example), copy an existing <code>&lt;a class="recipe-card"&gt;</code> block within it, and update:</p>
+    <ul>
+      <li><code>href="recipe.html?r=your-new-id"</code> — must match the id from step 1</li>
+      <li>the origin, title, and description text</li>
+      <li><code>data-tags</code> — space-separated tags used by the tag filter buttons</li>
+      <li><code>data-search</code> — space-separated keywords used by the search box</li>
+      <li>the time and tag pills in <code>card-footer</code></li>
+    </ul>
+    <p>That's it — the recipe page itself needs no separate file or edit; it looks up whatever id is in the URL automatically.</p>
+  </div>
+
+  <div class="about-section" id="photos">
+    <h2>Adding photos</h2>
+    <p>Every recipe can have a photo — a hero image at the top of the recipe page, and optionally a matching thumbnail on its homepage card. Neither is required; recipes with no photo look exactly as they do now.</p>
+
+    <h3>1. Add the image file to the repo</h3>
+    <p>Create an <code>images</code> folder in the repo root if it doesn't exist yet, and upload the photo there. A few things that keep the site fast and looking good:</p>
+    <ul>
+      <li>JPG or WEBP, not PNG — photos compress much better as JPG</li>
+      <li>Resize to around 1600px on the long edge before uploading. Straight-from-phone photos are often 3000px+ and needlessly large</li>
+      <li>Name the file to match the recipe id, e.g. <code>muhammara.jpg</code> — easy to find later</li>
+    </ul>
+
+    <h3>2. Add the image field to recipes-data.js</h3>
+    <p>Add one line to that recipe's entry:</p>
+    <pre><code>"image": "images/muhammara.jpg",</code></pre>
+    <p>This alone puts the photo at the top of that recipe's page.</p>
+
+    <h3>3. (Optional) Add it to the homepage card</h3>
+    <p>In <code>index.html</code>, find that recipe's card and add an <code>&lt;img&gt;</code> as the very first thing inside the <code>&lt;a class="recipe-card"&gt;</code> tag, before the <code>card-accent</code> div. Give it the same category class the accent div uses (<code>stew</code>, <code>sauce</code>, <code>bean</code>, <code>dip</code>, <code>breakfast</code>, or <code>dinner</code>) so the card's left border color still matches its section:</p>
+    <pre><code>&lt;a class="recipe-card" href="recipe.html?r=muhammara" ...&gt;
+  &lt;img class="card-photo dip" src="images/muhammara.jpg" alt="Muhammara"&gt;
+  &lt;div class="card-accent dip"&gt;&lt;/div&gt;
+  &lt;div class="card-body"&gt;...&lt;/div&gt;
+&lt;/a&gt;</code></pre>
+    <div class="callout">
+      Photos are entirely optional, on both the recipe page and the card, and independent of each other — you can add a hero photo without a card thumbnail, or vice versa. Recipes with no <code>image</code> field are unaffected and keep looking exactly as they do now.
+    </div>
+  </div>
+
+  <div class="about-section" id="planner-note">
+    <h2>A note on the grocery planner</h2>
+    <p>The planner combines ingredients across recipes by matching on <code>name</code> + <code>unit</code>. If two recipes call the same ingredient slightly different things — <code>"garlic cloves, minced"</code> vs. <code>"garlic clove, minced"</code> — they won't merge into one line; they'll just appear as two separate entries on the list. Not a big problem, just worth keeping half an eye on for common ingredients (garlic, onion, olive oil, salt) when writing new recipes. Reusing the exact wording from an existing recipe when it's the same ingredient keeps the list clean.</p>
+  </div>
+
+</main>
+
+<footer>
+  The Family Table &nbsp;·&nbsp; Made with love
+</footer>
+
+</body>
+</html>
