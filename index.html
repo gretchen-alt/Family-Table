@@ -200,6 +200,26 @@
     .card-accent.breakfast { background: var(--blush); }
     .card-accent.dinner    { background: var(--camel); }
 
+    .card-photo {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      object-fit: cover;
+      display: block;
+      background: var(--parchment);
+    }
+
+    /* When a card has a photo, the thin accent color moves to a left border instead of a top strip */
+    .recipe-card:has(.card-photo) {
+      border-left: 4px solid var(--camel);
+    }
+    .recipe-card:has(.card-photo) .card-accent { display: none; }
+    .recipe-card:has(.card-photo.stew)   { border-left-color: var(--rust); }
+    .recipe-card:has(.card-photo.sauce)  { border-left-color: var(--olive); }
+    .recipe-card:has(.card-photo.bean)   { border-left-color: var(--teal); }
+    .recipe-card:has(.card-photo.dip)    { border-left-color: var(--mauve); }
+    .recipe-card:has(.card-photo.breakfast) { border-left-color: var(--blush); }
+    .recipe-card:has(.card-photo.dinner)    { border-left-color: var(--camel); }
+
     .section-intro {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
@@ -320,7 +340,7 @@
   <nav>
     <a href="index.html">Recipes</a>
     <a href="planner.html">Meal Planner</a>
-    <a href="#">About</a>
+    <a href="about.html">About</a>
   </nav>
 </header>
 
@@ -658,6 +678,19 @@
         <div class="card-footer">
           <span class="card-time">40 min</span>
           <div class="card-tags"><span class="card-tag">Beans</span><span class="card-tag">Garden</span></div>
+        </div>
+      </div>
+    </a>
+
+    <a class="recipe-card" href="recipe.html?r=black-beans-persian-lime-greens" data-tags="Dinner Beans Instant-Pot From-the-Garden" data-search="black beans greens persian lime instant pot swiss chard smoky sofrito">
+      <div class="card-accent dinner"></div>
+      <div class="card-body">
+        <div class="card-origin">American, Persian-influenced</div>
+        <div class="card-title">Smoky Persian Lime Black Beans & Greens</div>
+        <div class="card-desc">Instant Pot black beans perfumed with a cracked dried lime, finished with a garden sofrito.</div>
+        <div class="card-footer">
+          <span class="card-time">1 hr 15 min</span>
+          <div class="card-tags"><span class="card-tag">Instant Pot</span><span class="card-tag">Garden</span></div>
         </div>
       </div>
     </a>

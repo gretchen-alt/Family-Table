@@ -2333,5 +2333,179 @@ const RECIPES = {
       }
     ],
     "notes": "Overgrown cauliflower is ideal for this dish — a loose, grainy curd or yellowing at the surface is fine to eat once trimmed of anything genuinely soft. Use the whole plant: the tender inner leaves taste like a cross between cauliflower and collards, and the peeled stem is sweet and cubes in with the potatoes. Serve with rice, flatbread, or plain yogurt. Better on day two. Keeps 4 days refrigerated."
+  },
+  "black-beans-persian-lime-greens": {
+    "title": "Smoky Persian Lime Black Beans & Greens",
+    "description": "A one-pound bag of dry black beans, an Instant Pot, and a whole cracked Persian lime doing quiet work in the background — finished with a garden-forward sofrito of tomatoes, greens, and smoked cumin. Discovered by accident and worth repeating on purpose.",
+    "origin": "American, Persian-influenced",
+    "time": "1 hr 15 min (Instant Pot)",
+    "servings": 6,
+    "instant_pot": true,
+    "section": "Dinner",
+    "tags": [
+      "Dinner",
+      "Beans",
+      "Instant Pot",
+      "From the Garden"
+    ],
+    "ingredients": [
+      {
+        "amount": 1,
+        "unit": "lb",
+        "name": "dried black beans (one bag), rinsed",
+        "location": "Pantry",
+        "category": "Beans & Legumes"
+      },
+      {
+        "amount": 2,
+        "unit": null,
+        "name": "bay leaves",
+        "location": "Spice Rack",
+        "category": "Spices"
+      },
+      {
+        "amount": 2,
+        "unit": "tsp",
+        "name": "chicken base (or vegetable base)",
+        "location": "Fridge",
+        "category": "Condiments & Sauces"
+      },
+      {
+        "amount": 1,
+        "unit": null,
+        "name": "dried Persian lime (limu omani), cracked",
+        "location": "Pantry",
+        "category": "Spices"
+      },
+      {
+        "amount": 6,
+        "unit": "cup",
+        "name": "water",
+        "location": "Fridge",
+        "category": "Produce",
+        "skip": true
+      },
+      {
+        "amount": 3,
+        "unit": "tbsp",
+        "name": "avocado oil",
+        "location": "Pantry",
+        "category": "Oils & Vinegars"
+      },
+      {
+        "amount": 0.5,
+        "unit": null,
+        "name": "onion, diced",
+        "location": "Counter",
+        "category": "Produce"
+      },
+      {
+        "amount": 1,
+        "unit": null,
+        "name": "celery stalk, diced",
+        "location": "Fridge",
+        "category": "Produce"
+      },
+      {
+        "amount": 1,
+        "unit": null,
+        "name": "carrot, diced",
+        "location": "Fridge",
+        "category": "Produce"
+      },
+      {
+        "amount": 1.5,
+        "unit": "cup",
+        "name": "fresh tomatoes, chopped",
+        "location": "Fridge",
+        "category": "Produce"
+      },
+      {
+        "amount": 4,
+        "unit": null,
+        "name": "garlic cloves, minced",
+        "location": "Counter",
+        "category": "Produce"
+      },
+      {
+        "amount": 1,
+        "unit": "bunch",
+        "name": "garden greens (Swiss chard, passionflower vine leaves, or other tender greens), chopped",
+        "location": "Fridge",
+        "category": "Produce"
+      },
+      {
+        "amount": 1,
+        "unit": "tsp",
+        "name": "smoked cumin",
+        "location": "Spice Rack",
+        "category": "Spices"
+      },
+      {
+        "amount": 0.5,
+        "unit": "tsp",
+        "name": "ground cumin",
+        "location": "Spice Rack",
+        "category": "Spices"
+      },
+      {
+        "amount": 1,
+        "unit": "tsp",
+        "name": "sweet paprika",
+        "location": "Spice Rack",
+        "category": "Spices"
+      },
+      {
+        "amount": 1,
+        "unit": null,
+        "name": "fresh red chili, sliced",
+        "location": "Fridge",
+        "category": "Produce"
+      },
+      {
+        "amount": 1.5,
+        "unit": "tsp",
+        "name": "dried oregano",
+        "location": "Spice Rack",
+        "category": "Spices"
+      },
+      {
+        "amount": 1.5,
+        "unit": "tsp",
+        "name": "salt",
+        "location": "Spice Rack",
+        "category": "Spices"
+      },
+      {
+        "amount": 1,
+        "unit": "tsp",
+        "name": "sugar",
+        "location": "Spice Rack",
+        "category": "Spices"
+      }
+    ],
+    "steps": [
+      {
+        "title": "Pressure cook the beans",
+        "text": "Add the rinsed black beans, bay leaves, chicken base, cracked Persian lime, and water to the Instant Pot. Cook on the Bean/Chili setting for 30 minutes, then let it release naturally for 20 minutes before venting any remainder."
+      },
+      {
+        "title": "Sauté the vegetables",
+        "text": "While the beans cook, heat the avocado oil in a large saucepan over medium heat. Add the onion, celery, and carrot and cook until softened, about 6–8 minutes. Add the tomatoes, garlic, and greens and cook until the greens wilt and the tomatoes break down, another 5–6 minutes. Stir in the smoked cumin, ground cumin, paprika, chili, oregano, salt, and sugar. Simmer a few minutes more so the spices bloom, then set aside."
+      },
+      {
+        "title": "Remove the aromatics",
+        "text": "Once the beans have released, open the lid and fish out the bay leaves and the Persian lime — the lime has done its job by now and should come out, or it will turn the whole pot bitter if left too long."
+      },
+      {
+        "title": "Thicken",
+        "text": "Switch the Instant Pot to Sauté and let the beans reduce and thicken, uncovered, for 20 minutes, stirring occasionally so nothing catches on the bottom."
+      },
+      {
+        "title": "Combine",
+        "text": "Stir the sautéed vegetables into the thickened beans. Taste and adjust salt. Serve hot over rice."
+      }
+    ],
+    "notes": "The cracked Persian lime is the quiet trick here — it perfumes the whole pot with a tangy, slightly fermented note without turning the beans lime-flavored, as long as it comes out once the beans are done. If you can't find dried Persian limes, this still works well without one; it just won't have that particular tang. Garden greens are flexible here — chard, kale, beet greens, or amaranth greens all work in place of the passionflower vine leaves. Leftovers thicken further overnight; loosen with a splash of water or broth when reheating."
   }
 };
